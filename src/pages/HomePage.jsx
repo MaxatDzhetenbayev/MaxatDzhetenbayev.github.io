@@ -15,8 +15,10 @@ export const HomePage = () => {
    const { status, error, qty } = useSelector(selectCountriesInfo)
 
    useEffect(() => {
-      dispatch(loadCountries())
-      console.log()
+      if (!qty) {
+         dispatch(loadCountries())
+      }
+
    }, [dispatch, qty])
 
 
@@ -26,36 +28,43 @@ export const HomePage = () => {
       <>
          <Controls />
 
-         <List>
-            {countries.map((c) => {
-               const countryInfo = {
-                  img: c.flags.png,
-                  name: c.name,
-                  info: [
-                     {
-                        title: 'Population',
-                        description: c.population.toLocaleString(),
-                     },
-                     {
-                        title: 'Region',
-                        description: c.region,
-                     },
-                     {
-                        title: 'Capital',
-                        description: c.capital,
-                     },
-                  ],
-               };
 
-               return (
-                  <Card
-                     key={c.name}
-                     onClick={() => navigate(`/country/${c.name}`)}
-                     {...countryInfo}
-                  />
-               );
-            })}
-         </List>
+         {status === 'loading' && <h1 style={{ textAlign: 'center', marginTop: '50px' }}>LOADING...</h1>}
+         {status === 'error' && <h1 style={{ textAlign: 'center', marginTop: '50px' }}>ERROR: {error}</h1>}
+
+         {status === 'received' &&
+            <List>
+               {countries.map((c) => {
+                  const countryInfo = {
+                     img: c.flags.png,
+                     name: c.name,
+                     info: [
+                        {
+                           title: 'Population',
+                           description: c.population.toLocaleString(),
+                        },
+                        {
+                           title: 'Region',
+                           description: c.region,
+                        },
+                        {
+                           title: 'Capital',
+                           description: c.capital,
+                        },
+                     ],
+                  };
+
+                  return (
+                     <Card
+                        key={c.name}
+                        onClick={() => navigate(`/country/${c.name}`)}
+                        {...countryInfo}
+                     />
+                  );
+               })}
+            </List>
+         }
+
       </>
    );
 };
