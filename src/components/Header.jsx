@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
+import { setTheme } from '../store/theme/theme-actions';
 import { Link } from 'react-router-dom';
 import { IoMoon, IoMoonOutline } from 'react-icons/io5';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { Container } from './Container';
 
 const HeaderEl = styled.header`
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled(Link).attrs({
-  to: '/',
+   to: '/',
 })`
   color: var(--colors-text);
   font-size: var(--fs-sm);
@@ -35,27 +36,30 @@ const ModeSwitcher = styled.div`
 `;
 
 export const Header = () => {
-  const theme = 'light';
 
-  useEffect(() => {
-    document.body.setAttribute('data-theme', theme);
-  }, [theme]);
+   const dispatch = useDispatch()
 
-  return (
-    <HeaderEl>
-      <Container>
-        <Wrapper>
-          <Title>Where is the world?</Title>
-          <ModeSwitcher>
-            {theme === 'light' ? (
-              <IoMoonOutline size="14px" />
-            ) : (
-              <IoMoon size="14px" />
-            )}{' '}
-            <span style={{ marginLeft: '0.75rem' }}>{theme} Theme</span>
-          </ModeSwitcher>
-        </Wrapper>
-      </Container>
-    </HeaderEl>
-  );
+   const theme = useSelector(state => state.theme);
+
+   useEffect(() => {
+      document.body.setAttribute('data-theme', theme);
+   }, [theme]);
+
+   return (
+      <HeaderEl>
+         <Container>
+            <Wrapper>
+               <Title>Where is the world?</Title>
+               <ModeSwitcher onClick={() => dispatch(setTheme(theme === 'light' ? 'dark' : 'light'))} >
+                  {theme === 'light' ? (
+                     <IoMoonOutline size="14px" />
+                  ) : (
+                     <IoMoon size="14px" />
+                  )}{' '}
+                  <span style={{ marginLeft: '0.75rem' }}>{theme} Theme</span>
+               </ModeSwitcher>
+            </Wrapper>
+         </Container>
+      </HeaderEl>
+   );
 };
