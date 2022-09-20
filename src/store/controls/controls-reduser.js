@@ -1,4 +1,4 @@
-import { SET_SEARCH } from "./controls-actions"
+import { SET_SEARCH, SET_FILTER } from "./controls-actions"
 
 
 const initialState = {
@@ -14,7 +14,12 @@ export const controlsReduser = (state = initialState, { type, payload }) => {
             search: payload
          }
       }
-
+      case SET_FILTER: {
+         return {
+            ...state,
+            filter: payload
+         }
+      }
       default: {
          return state
       }
