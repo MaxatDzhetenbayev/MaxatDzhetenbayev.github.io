@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadNeighbors } from '../store/details/details-actions';
-import { selectNeighbors } from '../store/details/details-selector';
+import { loadNeighbors, selectNeighbors } from '../features/details/details-slice';
 import { useEffect } from 'react';
 
 const Wrapper = styled.section`
@@ -116,7 +115,7 @@ export const Info = (props) => {
          dispatch(loadNeighbors(borders))
       }
    }, [borders, dispatch])
-   console.log(neighbors)
+   
    return (
       <Wrapper>
          <InfoImage src={flag} alt={name} />
