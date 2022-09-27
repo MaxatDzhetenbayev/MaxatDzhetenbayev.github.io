@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
 import { Container } from './Container';
+import ThemeSwitcher from '../features/theme/ThemeSwitcher';
 
 const HeaderEl = styled.header`
   box-shadow: var(--shadow);
@@ -34,7 +35,7 @@ export const Header = () => {
          <Container>
             <Wrapper>
                <Title>Where is the world?</Title>
-              
+               <ThemeSwitcher />
             </Wrapper>
          </Container>
       </HeaderEl>
